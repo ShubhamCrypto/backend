@@ -2,8 +2,11 @@ package dev.shubham.productcatalog.Controllers;
 
 import dev.shubham.productcatalog.Services.ProductService;
 import dev.shubham.productcatalog.dtos.GenricProductDto;
+import dev.shubham.productcatalog.dtos.request.UpdateProductRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,14 +38,19 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public GenricProductDto deleteProductById(@PathVariable("id") Long id){
-        return this.productService.deleteProduct(id);
+    public ResponseEntity<GenricProductDto> deleteProductById(@PathVariable("id") Long id){
+        //return this.productService.deleteProduct(id);
+        return new ResponseEntity<GenricProductDto>(
+                this.productService.deleteProduct(id),
+                HttpStatus.OK
+        );
     }
     @PostMapping
     public GenricProductDto createProduct(@RequestBody GenricProductDto genricProductDto){
         return productService.createProduct(genricProductDto);
     }
-    public void updateProductByid(){
-
+    @PutMapping("/{id}")
+    public GenricProductDto updateProduct(@PathVariable("id")Long id,@RequestBody UpdateProductRequestDto updateProductRequestDto){
+        return productService.updateProductById(id,updateProductRequestDto);
     }
 }

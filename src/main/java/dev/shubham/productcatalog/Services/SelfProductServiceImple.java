@@ -1,6 +1,7 @@
 package dev.shubham.productcatalog.Services;
 
 import dev.shubham.productcatalog.dtos.GenricProductDto;
+import dev.shubham.productcatalog.dtos.request.UpdateProductRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +26,13 @@ public class SelfProductServiceImple implements ProductService{
 
     @Override
     public GenricProductDto deleteProduct(Long id) {
+        return null;
+    }
+
+
+
+    @Override
+    public GenricProductDto updateProductById(Long id, UpdateProductRequestDto updateProductRequestDto) {
         return null;
     }
 

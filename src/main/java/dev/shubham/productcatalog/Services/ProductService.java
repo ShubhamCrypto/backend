@@ -2,6 +2,7 @@ package dev.shubham.productcatalog.Services;
 
 import dev.shubham.productcatalog.dtos.FakeStoreProductDto;
 import dev.shubham.productcatalog.dtos.GenricProductDto;
+import dev.shubham.productcatalog.dtos.request.UpdateProductRequestDto;
 
 import java.util.List;
 
@@ -13,4 +14,6 @@ public interface ProductService {
 
     List<GenricProductDto> getProducts();
     GenricProductDto deleteProduct(Long id);
+
+    GenricProductDto updateProductById(Long id, UpdateProductRequestDto updateProductRequestDto);
 }

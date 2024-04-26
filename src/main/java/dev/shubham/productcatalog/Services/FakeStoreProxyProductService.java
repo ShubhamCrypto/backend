@@ -2,6 +2,7 @@ package dev.shubham.productcatalog.Services;
 
 import dev.shubham.productcatalog.dtos.FakeStoreProductDto;
 import dev.shubham.productcatalog.dtos.GenricProductDto;
+import dev.shubham.productcatalog.dtos.request.UpdateProductRequestDto;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -25,12 +26,7 @@ public class FakeStoreProxyProductService implements ProductService{
         RestTemplate restTemplate=restTemplateBuilder.build();
         ResponseEntity<FakeStoreProductDto> responseEntity= restTemplate.getForEntity(specificProductRequestUrl, FakeStoreProductDto.class,id);
         FakeStoreProductDto fakeStoreProductDto=responseEntity.getBody();
-        GenricProductDto product=new GenricProductDto();
-        product.setImage(fakeStoreProductDto.getImage());
-        product.setDescription(fakeStoreProductDto.getDescription());
-        product.setPrice(fakeStoreProductDto.getPrice());
-        product.setTitle(fakeStoreProductDto.getTitle());
-        product.setCategory(fakeStoreProductDto.getCategory());
+        GenricProductDto product=convertFakeStoreProductDtoIntoGenricProductDto(fakeStoreProductDto);
         return product;
 
     }
@@ -71,12 +67,7 @@ public class FakeStoreProxyProductService implements ProductService{
         List<GenricProductDto> ans=new ArrayList<>();
         List<FakeStoreProductDto> response=responseEntity.getBody();
         for(FakeStoreProductDto fakeStoreProductDto:response){
-            GenricProductDto product=new GenricProductDto();
-            product.setImage(fakeStoreProductDto.getImage());
-            product.setDescription(fakeStoreProductDto.getDescription());
-            product.setPrice(fakeStoreProductDto.getPrice());
-            product.setTitle(fakeStoreProductDto.getTitle());
-            product.setCategory(fakeStoreProductDto.getCategory());
+            GenricProductDto product=convertFakeStoreProductDtoIntoGenricProductDto(fakeStoreProductDto);
             ans.add(product);
         }
         return ans;
@@ -102,8 +93,27 @@ public class FakeStoreProxyProductService implements ProductService{
 
     }
 
+    @Override
+    public GenricProductDto updateProductById(Long id, UpdateProductRequestDto updateProductRequestDto) {
+        RestTemplate restTemplate=restTemplateBuilder.build();
+        ResponseEntity<FakeStoreProductDto> responseEntity=restTemplate.getForEntity(specificProductRequestUrl,FakeStoreProductDto.class,id);
+        System.out.println(responseEntity.getBody().getId());
+        System.out.println("**********");
+        FakeStoreProductDto fakeStoreProductDto=responseEntity.getBody();
+        fakeStoreProductDto.setCategory(updateProductRequestDto.getCategory());
+        fakeStoreProductDto.setTitle(updateProductRequestDto.getTitle());
+        fakeStoreProductDto.setPrice(updateProductRequestDto.getPrice());
+        fakeStoreProductDto.setImage(updateProductRequestDto.getImage());
+        fakeStoreProductDto.setDescription(updateProductRequestDto.getDescription());
+        GenricProductDto genricProductDto=convertFakeStoreProductDtoIntoGenricProductDto(fakeStoreProductDto);
+        System.out.println(genricProductDto.getId());
+        ResponseEntity<GenricProductDto> result=restTemplate.postForEntity(productsRequestBaseUrl,genricProductDto,GenricProductDto.class);
+        return result.getBody();
+    }
+
     private GenricProductDto convertFakeStoreProductDtoIntoGenricProductDto(FakeStoreProductDto fakeStoreProductDto){
         GenricProductDto product=new GenricProductDto();
+        product.setId(fakeStoreProductDto.getId());
         product.setImage(fakeStoreProductDto.getImage());
         product.setDescription(fakeStoreProductDto.getDescription());
         product.setPrice(fakeStoreProductDto.getPrice());
