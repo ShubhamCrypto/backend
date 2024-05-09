@@ -1,15 +1,13 @@
-package dev.shubham.productcatalog.Services;
+package dev.shubham.productcatalog.thirdpartyclients.productService;
 
-import dev.shubham.productcatalog.dtos.FakeStoreProductDto;
 import dev.shubham.productcatalog.dtos.GenricProductDto;
 import dev.shubham.productcatalog.dtos.request.UpdateProductRequestDto;
 import dev.shubham.productcatalog.exceptions.NotFoundException;
 
 import java.util.List;
 
-public interface ProductService {
+public interface ThirdPartyPoductService {
     GenricProductDto getProductById(Long id) throws NotFoundException;
-
 
     GenricProductDto createProduct(GenricProductDto genricProductDto);
 
@@ -18,3 +16,5 @@ public interface ProductService {
 
     GenricProductDto updateProductById(Long id, UpdateProductRequestDto updateProductRequestDto);
 }
+
+//this package says that class which are CLIENT of fakeStore API are writtern here.
