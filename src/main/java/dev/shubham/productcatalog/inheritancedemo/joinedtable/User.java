@@ -1,4 +1,4 @@
-package dev.shubham.productcatalog.inheritancedemo.tableperclass;
+package dev.shubham.productcatalog.inheritancedemo.joinedtable;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,8 +8,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-@Entity(name = "tablePerClass_user")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Entity(name = "JoinedTable_user")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
