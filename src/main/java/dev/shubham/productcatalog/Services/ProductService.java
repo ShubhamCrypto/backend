@@ -1,6 +1,5 @@
 package dev.shubham.productcatalog.Services;
 
-import dev.shubham.productcatalog.dtos.FakeStoreProductDto;
 import dev.shubham.productcatalog.dtos.GenricProductDto;
 import dev.shubham.productcatalog.dtos.request.UpdateProductRequestDto;
 import dev.shubham.productcatalog.exceptions.NotFoundException;
