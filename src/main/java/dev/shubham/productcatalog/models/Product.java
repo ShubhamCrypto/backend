@@ -1,13 +1,14 @@
 package dev.shubham.productcatalog.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.*;
+import lombok.*;
 
-@Builder
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Product extends BaseModel{
     private String title;
     private String description;
@@ -16,8 +17,13 @@ public class Product extends BaseModel{
     //=>L TO R : 1 : 1
     //=>R TO L : M : 1
     //=> ANS   : M : 1
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
+    @JoinColumn(name="category_id")
     private Category category;
-    private double price;
+
+    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE  })
+    private Price price;
     //double has precision issues
 }
+
+//pid title desc image category_id
